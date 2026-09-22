@@ -1,4 +1,4 @@
-# 🏥 AI Claims Intake System
+# 🏥 Multi-Agent Insurance Claims Intake System
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)
