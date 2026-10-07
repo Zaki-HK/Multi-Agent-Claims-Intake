@@ -1,0 +1,61 @@
+<script setup>
+import { computed } from 'vue'
+import {
+  ArrowDownToLine,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  BarChart3,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  CircleAlert,
+  ClipboardCheck,
+  Clock3,
+  FileText,
+  FolderOpen,
+  LayoutDashboard,
+  LoaderCircle,
+  Menu,
+  Plus,
+  RefreshCw,
+  Search,
+  ShieldCheck,
+  UploadCloud,
+  X,
+} from '@lucide/vue'
+const props = defineProps({
+  name: { type: String, default: 'file' },
+  size: { type: Number, default: 20 },
+})
+const icons = {
+  download: ArrowDownToLine,
+  back: ArrowLeft,
+  arrow: ArrowRight,
+  external: ArrowUpRight,
+  chart: BarChart3,
+  check: Check,
+  success: CheckCircle2,
+  down: ChevronDown,
+  left: ChevronLeft,
+  right: ChevronRight,
+  alert: CircleAlert,
+  review: ClipboardCheck,
+  clock: Clock3,
+  file: FileText,
+  folder: FolderOpen,
+  dashboard: LayoutDashboard,
+  loader: LoaderCircle,
+  menu: Menu,
+  plus: Plus,
+  refresh: RefreshCw,
+  search: Search,
+  shield: ShieldCheck,
+  upload: UploadCloud,
+  close: X,
+}
+const icon = computed(() => icons[props.name] || FileText)
+</script>
+<template><component :is="icon" :size="size" :stroke-width="1.7" aria-hidden="true" /></template>

@@ -1,1 +1,11 @@
 final_implementation_plan.md
+.env
+__pycache__/
+.pytest_cache/
+/models/
+/uploads/
+/backend/uploads/
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.env.local
+/frontend/.env.*.local

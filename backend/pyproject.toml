@@ -1,0 +1,46 @@
+[project]
+name = "insurance-agent-backend"
+version = "0.1.0"
+description = "FastAPI backend for AI Claims Intake system"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.109.2",
+    "uvicorn[standard]>=0.27.1",
+    "pydantic>=2.6.1",
+    "pydantic-settings>=2.1.0",
+    "sqlalchemy>=2.0.27",
+    "asyncpg>=0.29.0",
+    "alembic>=1.13.1",
+    "docling>=2.60,<3",
+    "docling-core[chunking]>=2.48,<3",
+    "FlagEmbedding>=1.3.5,<2",
+    "transformers>=4.44,<5",
+    "qdrant-client>=1.12,<2",
+    "langgraph>=0.3,<2",
+    "langchain-core>=0.3,<2",
+    "langgraph-checkpoint-postgres>=2,<4",
+    "psycopg[binary,pool]>=3.2,<4",
+    "celery[redis]>=5.4,<6",
+    "httpx>=0.27,<1",
+    "python-multipart>=0.0.20",
+    "Pillow>=10.3,<13",
+    "typing-extensions>=4.12,<5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.optional-dependencies]
+test = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

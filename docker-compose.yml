@@ -27,11 +27,18 @@ services:
 
   litellm:
     image: ghcr.io/berriai/litellm:main-latest
+    environment:
+      LITELLM_UPSTREAM_MODEL: "openai/${LLM_MODEL:-your-model-id}"
+      LLM_API_BASE: ${LLM_API_BASE:-http://host.docker.internal:8001/v1}
+      LLM_API_KEY: ${LLM_API_KEY:-not-needed}
+      LITELLM_MASTER_KEY: ${LITELLM_API_KEY:-sk-local-dev-key}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "4000:4000"
     volumes:
-      - ./litellm/config.yaml:/app/config.yaml
-    command: [ "--config", "/app/config.yaml" ]
+      - ./litellm/config.yaml:/app/config.yaml:ro
+    command: [ "--config", "/app/config.yaml", "--host", "0.0.0.0", "--port", "4000" ]
 
   backend:
     build:
@@ -42,6 +49,8 @@ services:
       - .env
     volumes:
       - ./backend:/app
+      - claim_uploads:/app/uploads
+      - model_cache:/root/.cache/huggingface
     depends_on:
       - postgres
       - qdrant
@@ -51,11 +60,13 @@ services:
   celery-worker:
     build:
       context: ./backend
-    command: celery -A app.main.celery_app worker --loglevel=info
+    command: celery -A app.celery_app:celery_app worker --loglevel=info
     env_file:
       - .env
     volumes:
       - ./backend:/app
+      - claim_uploads:/app/uploads
+      - model_cache:/root/.cache/huggingface
     depends_on:
       - redis
       - postgres
@@ -64,6 +75,9 @@ services:
   frontend:
     build:
       context: ./frontend
+      target: development
+    environment:
+      API_PROXY_TARGET: http://backend:8000
     ports:
       - "3000:3000"
     volumes:
@@ -75,3 +89,5 @@ services:
 volumes:
   postgres_data:
   qdrant_data:
+  claim_uploads:
+  model_cache:

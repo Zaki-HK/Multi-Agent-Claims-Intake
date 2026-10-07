@@ -1,0 +1,16 @@
+model_list:
+  # Stable alias used by agents, independent of the upstream model/provider.
+  - model_name: claims-model
+    litellm_params:
+      model: os.environ/LITELLM_UPSTREAM_MODEL
+      api_base: os.environ/LLM_API_BASE
+      api_key: os.environ/LLM_API_KEY
+
+router_settings:
+  routing_strategy: simple-shuffle
+  num_retries: 3
+  timeout: 120
+  allowed_fails: 3
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
